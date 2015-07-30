@@ -1,0 +1,43 @@
+# Generic file types
+
+*.diff
+*.err
+*.orig
+*.log
+*.rej
+*.swo
+*.swp
+*.zip
+*.vi
+*~
+
+# Other generic files
+
+.DS_Store
+._*
+Thumbs.db
+.cache
+.project
+.settings
+.tmproj
+*.esproj
+nbproject
+*.sublime-project
+*.sublime-workspace
+.idea
+*.komodoproject
+.komodotools
+
+# Reporters
+
+validation-status.json
+validation-report.json
+
+# NPM
+
+node_modules/
+npm-debug.log*
+
+# Repo specifics
+
+config.json

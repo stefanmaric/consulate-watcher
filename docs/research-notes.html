@@ -1,0 +1,183 @@
+<form method="post" action="ingAgenda.php" id="formulario" target="_blank">
+    <fieldset id="frmDoc" class="INSfieldset">
+    <legend>  </legend><br>
+        <div class="contcampo">
+        <label class="etLabel" for="tramite">Trámite: </label>
+            <select id="tramite" name="tramite" class="combo" onchange="tramite_pais()">
+                <option value="0" selected="">-- Seleccione trámite --</option>	        
+                <option id="RES" value="RES">Residencia</option>
+
+            </select>
+        </div>
+        <br><br>
+        <div id="seleccionarPais" class="contcampo">
+        <div id="divPais" class="contcampo"><label class="etLabel" for="pais">País donde iniciará el trámite: </label><select id="pais" name="pais" class="combo" onchange="pais_mision()"><input value="0">RES
+            <option value="0">-- Seleccione país --</option>
+
+            <option value="AR">Argentina</option>
+            <option value="BR">Brasil</option>
+            <option value="UY">Uruguay</option>
+            <option value="VE">Venezuela</option>
+            </select></div><br><br></div>
+    
+        <div id="seleccionarLugar" class="contcampo">
+        <div id="divLugar" class="contcampo"><label class="etLabel" for="mision">Lugar donde efectuará el trámite: </label><select id="mision" name="mision" class="combo"><option value="0">-- Seleccione lugar --</option>
+            <option value="CDCARACAS">Consulado de Distrito en Caracas</option>
+        </select><br><br></div></div>
+    
+        <div class="espacioboton">
+        </div>
+        <div id="boton">
+        <input id="btnAgenda" value="Acceder" type="button"></div>
+        <div id="mensaje"> </div>
+    </fieldset>
+</form>
+
+<script>
+function tramite_pais() {
+    var untramite=$("#tramite").val(); // 'RES'
+    $.ajax({
+            url: 'LoadPais.php',
+            type: 'post',
+            data: {untramite: untramite},
+            success: function (data){
+                        $("#pais").html(data);                
+                    },
+            error: function() { alert('Se ha producido un error'); }
+        });
+}
+</script>
+
+<script>
+function pais_mision() {
+    var unpais=$("#pais").val();
+    var untramite=$("#tramite").val(); // 'RES'
+    $.ajax({
+        url: 'LoadMision.php',
+        type: 'post',
+        data: {unpais: unpais, untramite: untramite},
+        success: function (data){
+                    $("#mision").html(data);
+                },
+        error: function() { alert('Se ha producido un error'); }
+    });
+}
+</script>
+
+<script>
+function () {
+  if (checkSelect("#tramite")) {
+    if (checkSelect("#pais")) {
+      if (checkSelect("#mision")) {
+        $("#formulario").submit(); // method="post" action="ingAgenda.php"
+      } else {
+        $("#mensaje").html(" ");
+        $("#mensaje").append("<div class='contMensaje'><span class='contMensaje'>Debe seleccionar el lugar donde efectuar&aacute; el tr&aacute;mite. </span></div>");
+      }
+    } else {
+      $("#mensaje").html(" ");
+      $("#mensaje").append("<div class='contMensaje'><span >Debe seleccionar el pa&iacute;s donde iniciar&aacute; el tr&aacute;mite. </span></div>");
+
+    }
+  } else {
+    $("#mensaje").html(" ");
+    $("#mensaje").append("<div class='contMensaje'><span class='contMensaje'>Debe seleccionar el tr&aacutemite. </span></div>");
+  }
+}
+</script>
+
+<pre><code>
+POST https://sitios.mrree.gub.uy/tramites/seleccionar/LoadPais.php
+
+--------------------REQUEST HEADERS--------------------
+Host: sitios.mrree.gub.uy
+User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:41.0) Gecko/20100101 Firefox/41.0
+Accept: */*
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate
+Content-Type: application/x-www-form-urlencoded; charset=UTF-8
+X-Requested-With: XMLHttpRequest
+Referer: https://sitios.mrree.gub.uy/tramites/seleccionar/
+Content-Length: 13
+Connection: keep-alive
+Pragma: no-cache
+Cache-Control: no-cache
+--------------------REQUEST BODY--------------------
+untramite=RES
+--------------------RESPONSE HEADERS--------------------
+Connection: Keep-Alive
+Content-Encoding: gzip
+Content-Length: 164
+Content-Type: text/html
+Date: Wed, 22 Jul 2015 19:59:06 GMT
+Keep-Alive: timeout=5, max=100
+Server: Apache/2.2.22 (Debian)
+Vary: Accept-Encoding
+X-Powered-By: PHP/5.4.36-0+deb7u3
+</code></pre>
+
+<pre><code>
+POST https://sitios.mrree.gub.uy/tramites/seleccionar/ingAgenda.php
+--------------------REQUEST HEADERS--------------------
+Host: sitios.mrree.gub.uy
+User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:41.0) Gecko/20100101 Firefox/41.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate
+Referer: https://sitios.mrree.gub.uy/tramites/seleccionar/
+Connection: keep-alive
+Pragma: no-cache
+Cache-Control: no-cache
+--------------------REQUEST BODY--------------------
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 36
+
+tramite=RES&pais=VE&mision=CDCARACAS
+--------------------RESPONSE HEADERS--------------------
+Connection: Keep-Alive
+Content-Encoding: gzip
+Content-Length: 23
+Content-Type: text/html
+Date: Wed, 22 Jul 2015 18:14:00 GMT
+Keep-Alive: timeout=5, max=100
+Location: https://tramitesagenda.mrree.gub.uy/mrree/agendarReserva/Paso1.xhtml?agenda=CDCARACAS&recurso=RES
+Server: Apache/2.2.22 (Debian)
+Vary: Accept-Encoding
+X-Powered-By: PHP/5.4.36-0+deb7u3
+</code></pre>
+
+<pre><code>
+GET https://tramitesagenda.mrree.gub.uy/mrree/agendarReserva/Paso1.xhtml?agenda=CDCARACAS&recurso=RES
+--------------------REQUEST HEADERS--------------------
+Host: tramitesagenda.mrree.gub.uy
+User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:41.0) Gecko/20100101 Firefox/41.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate
+Referer: https://sitios.mrree.gub.uy/tramites/seleccionar/
+Connection: keep-alive
+Pragma: no-cache
+Cache-Control: no-cache
+--------------------REQUEST BODY--------------------
+
+--------------------RESPONSE HEADERS--------------------
+Cache-Control: no-cache, no-store, must-revalidate
+Connection: Keep-Alive
+Content-Encoding: gzip
+Content-Type: text/html;charset=UTF-8
+Date: Wed, 22 Jul 2015 18:07:10 GMT
+Expires: Sun, 01 Jan 2006 05:00:00 GMT
+Keep-Alive: timeout=5, max=100
+Pragma: no-cache
+Server: Apache-Coyote/1.1
+Set-Cookie: JSESSIONID=19C5750F1D97C742D2EC74EB3DC0B61C; Path=/mrree
+Transfer-Encoding: chunked
+Vary: Accept-Encoding
+X-Powered-By: Servlet 2.5; JBoss-5.0/JBossWeb-2.1, JSF/1.2
+</code></pre>
+
+
+<script>
+document.querySelectorAll('.diaConCupo');
+document.querySelectorAll('.diaSinCupo');
+</script>

@@ -1,0 +1,10 @@
+I looked around for available dates, this is what I found:
+
+{%- for consulate in data %}
+{{ consulate.countryCode }}: {{ consulate.consulateName | truncate(28) }}
+  {%- for freeDay in consulate.freeDays | limitTo(3) %}
+  	{{ freeDay.date | date('MMM DD') }}
+  {%- endfor %}
+{% endfor %}
+
+I also found some nuts.

@@ -2,6 +2,7 @@
  * Use `watch:false` to ensure process exits correctly.
  * See: https://github.com/mozilla/nunjucks/issues/486
  */
+var config = require('./config');
 var nunjucks = require('nunjucks').configure('templates', { watch: false });
 var request  = require('request').defaults({ baseUrl: config.telegram.baseUrl });
 

@@ -1,7 +1,7 @@
 {
   "name": "consulate-watcher",
   "version": "1.0.0",
-  "description": "",
+  "description": "Set of tools to watch for new available dates in consulates around the world.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",

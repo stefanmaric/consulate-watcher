@@ -1,3 +1,19 @@
+/**
+ * Config object, import as JSON
+ * @type {Object}
+ *
+ * @example
+ * {
+ *   "consulateUrls": {
+ *     "country": "https://example.com/countries.php",
+ *     "consulate": "https://example.com/consulates.php",
+ *     "agenda": "https://example.com/agenda.xhtml"
+ *   },
+ *   "telegram": {
+ *     "baseUrl": "https://api.telegram.org/bot<bot-token>/"
+ *   }
+ * }
+ */
 var config = require('./config');
 var fetch  = require('./fetcher');
 var notify = require('./notifier');

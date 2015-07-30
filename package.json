@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js"
+    "start": "node server.js"
   },
   "keywords": [
     "uruguay"
@@ -15,7 +15,7 @@
   "dependencies": {
     "async": "^1.4.0",
     "cheerio": "^0.19.0",
-    "express": "^4.13.1",
+    "express": "^3.21.1",
     "moment": "^2.10.3",
     "nunjucks": "^1.3.4",
     "nunjucks-date": "^1.1.2",

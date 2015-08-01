@@ -1,10 +1,19 @@
-I looked around for available dates, this is what I found:
+I looked around and this is what I found:
 
 {%- for consulate in data %}
-{{ consulate.countryCode }}: {{ consulate.consulateName | truncate(28) }}
-  {%- for freeDay in consulate.freeDays | limitTo(3) %}
-  	{{ freeDay.date | date('MMM DD') }}
-  {%- endfor %}
-{% endfor %}
 
-I also found some nuts.
+{{ consulate.countryCode }}: {{ consulate.consulateName | truncate(28) }}
+  {% if consulate.freeDays and consulate.freeDays.length %}
+    {%- for freeDay in consulate.freeDays | limitTo(3) %}
+    {{ freeDay.date | date('MMM DD') }}
+    {%- endfor %}
+  {%- else %}
+
+    No available dates.
+  {% endif %}
+
+  {% if consulate.freeDays.length > 3 %} {{ consulate.freeDays.length - 3 }} more free days and  {%- endif %} {{ consulate.busyDays.length }} busy days.
+
+{%- endfor %}
+
+I also found some nuts. 🌰🌰🌰

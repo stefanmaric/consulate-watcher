@@ -1,14 +1,20 @@
 #!/bin/env node
 
-var http = require('http');
+var TelegramBot = require('node-telegram-bot-api');
 
-var host = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
-var port = process.env.OPENSHIFT_NODEJS_PORT || 8080;
+var config      = require('./config');
 
-http.createServer(function (req, res) {
-  console.log('%s: %s %s', Date(Date.now()), req.method, req.url);
-  res.writeHead(200, {'Content-Type': 'text/plain'});
-  res.end('consulate');
-}).listen(port, host);
+var host        = process.env.OPENSHIFT_NODEJS_IP   || '127.0.0.1';
+var port        = process.env.OPENSHIFT_NODEJS_PORT || 8080;
+var domain      = process.env.OPENSHIFT_APP_DNS     || 'localhost';
+
+var bot         = new TelegramBot(config.telegram.token, { webHook: { port: port, host: host }});
+
+bot.setWebHook(domain + ':443/bot' + config.telegram.token);
+
+bot.on('message', function (msg) {
+  bot.sendMessage(msg.chat.id, "Received!");
+});
 
 console.log('Server running at %s:%s', host, port);
+console.log('Webhook pointing to %s', domain);

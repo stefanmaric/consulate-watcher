@@ -10,6 +10,7 @@
  *     "agenda": "https://example.com/agenda.xhtml"
  *   },
  *   "telegram": {
+ *     "token": "57851515:ADf7DbdQcksIF9D_yiveQFYaedDsEYwbDiC",
  *     "baseUrl": "https://api.telegram.org/bot<bot-token>/"
  *   }
  * }

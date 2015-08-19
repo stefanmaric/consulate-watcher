@@ -1,10 +1,12 @@
+var config = require('./config');
 /*
  * Use `watch:false` to ensure process exits correctly.
  * See: https://github.com/mozilla/nunjucks/issues/486
  */
-var config = require('./config');
 var nunjucks = require('nunjucks').configure('templates', { watch: false });
-var request  = require('request').defaults({ baseUrl: config.telegram.baseUrl });
+var TelegramBot = require('node-telegram-bot-api');
+
+var bot         = new TelegramBot(config.telegram.token);
 
 module.exports = notify;
 
@@ -20,35 +22,21 @@ nunjucks.addFilter('date', require('nunjucks-date'));
  * 
  * @param  {String}     type          Type of notification, matches template filename
  * @param  {Object}     data          Data to be interpolated in template
- * @param  {Number}     receiverId    Telegram chat_id
+ * @param  {Number}     chat_id       Telegram chat_id
  * @param  {Number}     [respondTo]   Telegram reply_to_message_id
  * @param  {String[]}   [mentions]    List of usernames to mention at the end of the message
  * @return {undefined}
  *
  * @public
  */
-function notify(type, data, receiverId, respondTo, mentions) {
+function notify(type, data, chat_id, respondTo, mentions) {
 
   var templateName = type + '.nunjucks';
   var output = 'No Message';
   
   output = nunjucks.render(templateName, { data: data });
 
-  request.post({
-    uri: '/sendMessage',
-    form: {
-      chat_id: receiverId,
-      text: output
-    }
-  }, function(err, httpResponse, response) {
-        if (err) return error(err);
-        var status = httpResponse.statusCode;
-        if (status !== 200) {
-          err = new Error('Telegram API responded a ' + status);
-          err.httpResponse = httpResponse;
-          return error(err);
-        }
-        return console.log(response);
+  bot.sendMessage(chat_id, output).error(function(e) {
+    console.error(e);
   });
-
 }

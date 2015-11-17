@@ -1,7 +1,9 @@
-consulate-watcher
+telegram-ardillaBot
 =================
 
-Set of tools to watch for new available dates in consulates around the world.
+@ardillaBot - my personal assistant on Telegram
+
+https://telegram.me/ardillaBot 
 
 ## License
 

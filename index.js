@@ -5,8 +5,8 @@
  * @example
  * {
  *   "consulateUrls": {
- *     "country": "https://example.com/countries.php",
- *     "consulate": "https://example.com/consulates.php",
+ *     "country": "https://sitios.mrree.gub.uy/tramites/seleccionar/LoadPais.php",
+ *     "consulate": "https://sitios.mrree.gub.uy/tramites/seleccionar/LoadMision.php",
  *     "agenda": "https://example.com/agenda.xhtml"
  *   },
  *   "telegram": {
